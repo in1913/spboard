@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context>
+ <Resource  name="jdbc/spbbs" 
+ 			auth="Container"
+            type="javax.sql.DataSource"
+            username="root" 
+            password="whoareyou1085!"
+            driverClassName="com.mysql.cj.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/spbbs?useUnicode=true&amp;characterEncoding=UTF-8"             
+            maxActive="80" 
+            removeAbandoned="true"
+            maxWait="1000"/>
+</Context>
