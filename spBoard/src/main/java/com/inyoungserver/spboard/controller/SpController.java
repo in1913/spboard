@@ -2,6 +2,8 @@ package com.inyoungserver.spboard.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +18,22 @@ import com.inyoungserver.spboard.command.SpReplyokCommand;
 import com.inyoungserver.spboard.command.SpUpdateCommand;
 import com.inyoungserver.spboard.command.SpUpdateokCommand;
 import com.inyoungserver.spboard.command.SpWriteCommand;
+import com.inyoungserver.util.Static;
 
 @Controller
 public class SpController {
 	
 	// 모든 command가 갖고 있는 인터페이스 타입을 선언
 	SpCommand command;
+	
+	// jdbc spring template
+	public JdbcTemplate template;
+	
+	@Autowired
+	public void setTemplate(JdbcTemplate template) {
+		this.template = template;
+		Static.template = this.template;
+	}
 	
 	@RequestMapping("/list")
 	public String list(Model model) {

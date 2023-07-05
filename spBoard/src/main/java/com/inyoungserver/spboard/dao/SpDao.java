@@ -3,26 +3,32 @@ package com.inyoungserver.spboard.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import com.inyoungserver.spboard.dto.SpDto;
+import com.inyoungserver.util.Static;
 
 // db 접근 클래스
 public class SpDao {
+	
 	DataSource dataSource;
+	JdbcTemplate template = null;
+	
 	public SpDao() {
+		/*
 		try {
 			Context context = new InitialContext();
 			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/spbbs");
 		}catch(NamingException e) {
 			e.printStackTrace();
 		}
+		*/
+		template = Static.template;
 		
 	}
 	
@@ -331,6 +337,11 @@ public class SpDao {
 	
 	// 데이터를 받아서 SpDto에 담음
 	public ArrayList <SpDto> list(){
+		
+		String sql = "select * from spboard order by s_group desc, s_step asc";
+		
+		return (ArrayList<SpDto>)template.query(sql, new BeanPropertyRowMapper<SpDto>(SpDto.class));
+		/*
 		ArrayList <SpDto> dtos =  new ArrayList <SpDto> ();
 		
 		Connection conn = null;
@@ -366,7 +377,9 @@ public class SpDao {
 				if(rs != null) rs.close();
 			}catch(Exception ex) {}
 		}
+		
 		return dtos;
+		*/
 	}
 		
 
